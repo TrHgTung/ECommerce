@@ -30,19 +30,24 @@ namespace ECommerce.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "User");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
             return View(model);
         }
+
 
         // Đăng nhập
         public IActionResult Login()
