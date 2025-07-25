@@ -59,7 +59,7 @@ static async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
             DateOfBirth = DateTime.UtcNow     // 👈 Bổ sung nếu DB yêu cầu
         };
 
-        var result = await userManager.CreateAsync(admin, "Admin123$");
+        var result = await userManager.CreateAsync(admin, "Test@123"); // password mặc định
 
         if (result.Succeeded)
         {

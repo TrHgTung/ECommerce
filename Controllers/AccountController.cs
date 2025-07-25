@@ -16,7 +16,8 @@ namespace ECommerce.Controllers
         }
 
         // Đăng ký người dùng mới
-        public IActionResult Register() {
+        public IActionResult Register()
+        {
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home"); // Nếu đã đăng nhập, chuyển hướng về trang chính
@@ -93,6 +94,51 @@ namespace ECommerce.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        // đăng ký admin mới
+        [HttpGet]
+        [Route("admin/create-new-admin")]
+        public IActionResult RegisterAdmin()
+        {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("Admin"))
+                return Unauthorized(); // Hoặc Redirect đến trang đăng nhập
+
+            return View("RegisterAdmin", new RegisterViewModel());
+        }
+
+        [HttpPost]
+        [Route("admin/create-new-admin")]
+        public async Task<IActionResult> RegisterAdmin(RegisterViewModel model)
+        {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("Admin"))
+                return Unauthorized();
+
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                    return RedirectToAction("Index", "Admin"); // Sau khi tạo admin mới, quay về trang admin
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View("RegisterAdmin", model);
+        }
+
     }
 
 }

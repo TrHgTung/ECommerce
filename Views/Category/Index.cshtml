@@ -15,13 +15,7 @@
             <tr>
                 <td>@category.Id</td>
                 <td>@category.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@category.Id">Sửa</a> |
-                    <a asp-action="Delete" asp-route-id="@category.Id">Xoá</a>
-                </td>
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-action="Create" class="btn btn-primary">Tạo mới</a>
