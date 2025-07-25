@@ -17,7 +17,13 @@ namespace ECommerce.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Register() => View();
+        public IActionResult Register() {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                return View(new RegisterViewModel());
+            }
+            return RedirectToAction("AccessDenied", "Account"); // Nếu không phải admin, chuyển hướng đến trang từ chối truy cập
+        }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
