@@ -16,7 +16,13 @@ namespace ECommerce.Controllers
         }
 
         // Đăng ký người dùng mới
-        public IActionResult Register() => View();
+        public IActionResult Register() {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home"); // Nếu đã đăng nhập, chuyển hướng về trang chính
+            }
+            return View(new RegisterViewModel());
+        }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
