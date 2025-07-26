@@ -1,0 +1,27 @@
+@model IEnumerable<ECommerce.Models.Category>
+
+<h2>Danh sách danh mục</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Slug</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Slug</td>
+                <td>
+                    <a asp-action="EditCategory" asp-route-id="@item.Id">Sửa</a> |
+                    <form asp-action="DeleteCategory" asp-route-id="@item.Id" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Bạn chắc chắn?')">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

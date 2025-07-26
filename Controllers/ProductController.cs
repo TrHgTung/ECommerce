@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Controllers
 {
+    // [Route("{product}")]
     public class ProductController : Controller
     {
         private readonly DataContext _context;
@@ -15,6 +16,7 @@ namespace ECommerce.Controllers
         }
 
         // Hiển thị tất cả sản phẩm
+        [Route("product")]
         public async Task<IActionResult> Index()
         {
             var products = await _context.Products.Include(p => p.Category).ToListAsync();
@@ -22,14 +24,20 @@ namespace ECommerce.Controllers
         }
 
         // Chi tiết sản phẩm
-        public async Task<IActionResult> Details(int id)
+        // [Route("product/chi-tiet/{slug}")]
+        [Route("{slug}")]
+        [HttpGet]
+        public async Task<IActionResult> Details(string slug)
         {
-            var product = await _context.Products.Include(p => p.Category)
-                                                 .FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _context.Products
+                                        .Include(p => p.Category)
+                                        .FirstOrDefaultAsync(p => p.Slug == slug);
+
             if (product == null)
                 return NotFound();
 
             return View(product);
         }
+
     }
 }

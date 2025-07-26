@@ -1,2 +1,31 @@
-<h2>Đây là trang Admin dashboard </h2>
+@{
+    ViewData["Title"] = "Trang Admin";
+}
+
+<h2>Đây là trang Admin dashboard</h2>
 <p>Xin chào admin</p>
+
+<div class="mt-4">
+    <h4>Quản lý hệ thống</h4>
+    <ul>
+        <li>
+            <a href="/admin/create-product">➕ Thêm sản phẩm</a>
+        </li>
+        <li>
+            <a href="/admin/create-category">➕ Thêm danh mục</a>
+        </li>
+        <li>
+            <a href="/admin/create-new-admin">➕ Thêm tài khoản admin</a>
+        </li>
+    </ul>
+
+    <h4 class="mt-4">Xem & chỉnh sửa</h4>
+    <ul>
+        <li>
+            <a href="/admin/products">📦 Danh sách sản phẩm</a>
+        </li>
+        <li>
+            <a href="/admin/categories">📂 Danh sách danh mục</a>
+        </li>
+    </ul>
+</div>

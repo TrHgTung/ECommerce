@@ -110,6 +110,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//friendly URL routing\
+app.MapControllerRoute(
+    name: "productSlug",
+    pattern: "{slug}",
+    defaults: new { controller = "Product", action = "Details" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
