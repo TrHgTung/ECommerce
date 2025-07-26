@@ -1,6 +1,5 @@
 @model IEnumerable<ECommerce.Models.Product>
 
-
 <h2>Sản phẩm</h2>
 <table class="table">
     <thead>
@@ -8,6 +7,7 @@
             <th>Tên</th>
             <th>Giá</th>
             <th>Danh mục</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,21 @@
                 </td>
                 <td>@item.Price.ToString("N0")</td>
                 <td>@item.Category?.Name</td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Thêm giỏ hàng</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-secondary" href="/Account/Login">Đăng nhập để mua</a>
+                    }
+                </td>
             </tr>
         }
+
     </tbody>
 </table>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace ECommerce.Models
 {
@@ -11,6 +12,7 @@ namespace ECommerce.Models
         [Required]
         [StringLength(255)] // hoặc [MaxLength(255)]
         public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

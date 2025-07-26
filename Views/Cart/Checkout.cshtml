@@ -1,0 +1,26 @@
+@model List<ECommerce.Models.CartItem>
+
+<h2>Thanh toán</h2>
+
+@if (Model.Count == 0)
+{
+    <p>Giỏ hàng trống, không thể thanh toán.</p>
+}
+else
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item.ProductName - @item.Quantity x @item.Price.ToString("N0") VNĐ</li>
+        }
+    </ul>
+
+    <p><strong>Tổng cộng:</strong>
+        @Model.Sum(i => i.Quantity * i.Price).ToString("N0") VNĐ
+    </p>
+
+    <form asp-action="ConfirmCheckout" method="post">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-success">Xác nhận đặt hàng</button>
+    </form>
+}
